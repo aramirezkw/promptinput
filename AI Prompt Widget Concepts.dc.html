@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Mulish";src:url("fonts/Mulish-VariableFont_wght.ttf") format("truetype");font-weight:200 1000;font-style:normal;font-display:swap}
+:root{
+  --page:#0A0B0D;--h1:#FFFFFF;--sub:#8A9099;
+  --txt:#FFFFFF;--txt2:#D6D9DE;--txt3:#8A9099;--txt4:#6C727E;
+  --brd:rgba(255,255,255,.09);--brd2:rgba(255,255,255,.12);--line:rgba(255,255,255,.07);
+  --fill:rgba(255,255,255,.045);--fill2:rgba(255,255,255,.07);--dash:rgba(255,255,255,.18);
+  --sh:0 18px 44px rgba(0,0,0,.55);--sh2:0 28px 64px rgba(0,0,0,.7);
+  --card-a:#17181C;--card-b:#1C1D22;--card-c1:#1A1330;--card-c2:#141020;--card-d:#101815;
+  --card-e:#1B1512;--card-f:#101722;--card-g:#0C0D0F;--card-g2:#131418;--card-h:rgba(19,26,29,.92);
+  --a1:#017C98;--a1h:#0E9AB8;--a1s:#4FC3DC;--a1f:rgba(1,124,152,.18);--a1b:rgba(79,195,220,.5);--a1g:rgba(1,124,152,.55);
+  --b1:#5A626E;--b1s:#C8CBD0;--b1g:rgba(226,232,240,.30);
+  --c1:#8C58E8;--c1h:#9E71F2;--c1s:#C8A6FF;--c1i:#D9C8FF;--c1f:rgba(200,166,255,.16);--c1b:rgba(200,166,255,.22);--c1g:rgba(140,88,232,.55);--c-txt2:#B3A8CC;--c-txt3:#9A90B3;
+  --d1:#2E9E5B;--d1h:#3BB86C;--d1s:#63D18C;--d1g:rgba(56,180,110,.42);--d-txt2:#8FB79F;--d-txt3:#7D8F85;--d-txt4:#B4C6BB;
+  --e1:#E88C32;--e1d:#B9560A;--e1s:#F0A868;--e1g:rgba(232,140,50,.40);--e-txt2:#C99A6E;--e-txt3:#9E8C7C;
+  --f1:#2F7FD1;--f1h:#4A95E0;--f1s:#78B6F0;--f1i:#A9D2FA;--f1g:rgba(56,132,212,.42);--f-txt:#DDE6F0;--f-txt2:#7E9AB8;--f-txt3:#B7C7D8;--f-txt4:#6C8AA8;--f-txt5:#AFC0D2;
+  --g1:#CE011F;--g1s:#FF6B7A;--g1s2:#FF8A96;--g1g:rgba(206,1,31,.38);--g-txt2:#9CA3AD;--g-txt3:#5C626C;
+  --h1c:#5EE0E8;--h1a:#017C98;--h1ah:#0FA3C0;--h1i:#8FEFF5;--h1g:rgba(64,200,214,.35);--h-txt:#C3D4D8;--h-txt2:#CFDDE0;--h-txt3:#A9BCC1;--h-txt4:#8FA6AC;--h-txt5:#6F868C;
+}
+html[data-theme="light"]{
+  --page:#F7F7F8;--h1:#282B33;--sub:#6C727E;
+  --txt:#282B33;--txt2:#3D424D;--txt3:#6C727E;--txt4:#767C86;
+  --brd:rgba(61,66,77,.16);--brd2:rgba(61,66,77,.22);--line:rgba(43,43,51,.1);
+  --fill:rgba(43,43,51,.035);--fill2:rgba(43,43,51,.06);--dash:rgba(61,66,77,.25);
+  --sh:0 12px 28px rgba(43,43,51,.12);--sh2:0 20px 44px rgba(43,43,51,.18);
+  --card-a:#FFFFFF;--card-b:#FFFFFF;--card-c1:#FFFFFF;--card-c2:#FBF9FF;--card-d:#FFFFFF;
+  --card-e:#FFFFFF;--card-f:#FFFFFF;--card-g:#FFFFFF;--card-g2:#F7F7F8;--card-h:rgba(255,255,255,.94);
+  --a1:#006C84;--a1h:#0E4E5D;--a1s:#006C84;--a1f:rgba(0,108,132,.1);--a1b:rgba(0,108,132,.45);--a1g:rgba(0,108,132,.22);
+  --b1:#3D424D;--b1s:#3D424D;--b1g:rgba(61,66,77,.14);
+  --c1:#6730B4;--c1h:#7A3FCF;--c1s:#6730B4;--c1i:#6730B4;--c1f:rgba(103,48,180,.1);--c1b:rgba(103,48,180,.2);--c1g:rgba(103,48,180,.2);--c-txt2:#5F5877;--c-txt3:#6C727E;
+  --d1:#026E24;--d1h:#0B4C1F;--d1s:#026E24;--d1g:rgba(2,110,36,.2);--d-txt2:#3D6B4E;--d-txt3:#6C727E;--d-txt4:#3D424D;
+  --e1:#A73B06;--e1d:#8A3105;--e1s:#A73B06;--e1g:rgba(167,59,6,.2);--e-txt2:#8A5A3C;--e-txt3:#6C727E;
+  --f1:#0F5EAD;--f1h:#1D4670;--f1s:#0F5EAD;--f1i:#0F5EAD;--f1g:rgba(15,94,173,.2);--f-txt:#282B33;--f-txt2:#5A7690;--f-txt3:#3D424D;--f-txt4:#6C8AA8;--f-txt5:#3D424D;
+  --g1:#CE011F;--g1s:#C5050B;--g1s2:#C5050B;--g1g:rgba(206,1,31,.18);--g-txt2:#3D424D;--g-txt3:#767C86;
+  --h1c:#006C84;--h1a:#006C84;--h1ah:#0E4E5D;--h1i:#006C84;--h1g:rgba(0,108,132,.2);--h-txt:#3D424D;--h-txt2:#3D424D;--h-txt3:#3D424D;--h-txt4:#6C727E;--h-txt5:#6C727E;
+}
+html,body{margin:0;padding:0;background:var(--page)}
+*{box-sizing:border-box}
+input,textarea,button{font-family:"Mulish",sans-serif}
+input::placeholder,textarea::placeholder{color:var(--txt4)}
+a{color:var(--a1);text-decoration:none}
+a:hover{color:var(--a1h)}
+@keyframes glowBreathe{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.95;transform:scale(1.06)}}
+@keyframes glowSlide{0%{transform:translateX(-12%)}50%{transform:translateX(12%)}100%{transform:translateX(-12%)}}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+@keyframes ringOut{0%{transform:scale(.7);opacity:.55}100%{transform:scale(1.9);opacity:0}}
+@keyframes caret{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes bar{0%,100%{transform:scaleY(.22)}50%{transform:scaleY(1)}}
+@keyframes sheen{0%{transform:translateX(-140%)}100%{transform:translateX(240%)}}
+@keyframes dotPulse{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes shineRing{0%{background-position:0% 0%}50%{background-position:100% 100%}100%{background-position:0% 0%}}
+@keyframes focusBreathe{0%,100%{opacity:.7}50%{opacity:1}}</style>
+</helmet>
+
+<section style="min-height:100%;padding:64px 64px 120px;background:var(--page);font-family:'Mulish',sans-serif;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:820px">
+      <div style="font-weight:800;font-size:34px;line-height:1.15;color:var(--h1);letter-spacing:-0.01em">Command AI — Prompt Widget Concepts</div>
+      <div style="font-weight:400;font-size:16px;line-height:1.5;color:var(--sub);text-wrap:pretty">Nine distinct takes on the primary prompt surface. Each uses one XDS palette as its accent and a different ambient-glow treatment — <a href="#1i">1i</a> reuses 1c's canvas so the focus treatment is the only variable. Reference a concept by its id in chat — <a href="#1c">1c</a>, <a href="#1f">1f</a>, and so on.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:4px;background:var(--fill2);border:1px solid var(--brd);border-radius:100px;padding:4px">
+      <button onClick="{{ themeDark }}" style="border:0;border-radius:100px;padding:9px 18px;font-size:13.5px;font-weight:800;cursor:pointer;background:{{ darkBg }};color:{{ darkFg }};transition:all .15s ease">Dark</button>
+      <button onClick="{{ themeLight }}" style="border:0;border-radius:100px;padding:9px 18px;font-size:13.5px;font-weight:800;cursor:pointer;background:{{ lightBg }};color:{{ lightFg }};transition:all .15s ease">Light</button>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:56px 48px;align-items:flex-start;padding-top:26px">
+
+    <!-- ============ 1a — Console Bar (teal) ============ -->
+    <div id="1a" style="width:680px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--a1);padding:5px 7px;border-radius:4px">1a</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Console Bar</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">One line, chrome-adjacent, category rail</span>
+      </div>
+      <div style="position:relative;padding:26px 22px 30px">
+        <div style="position:absolute;left:8%;right:8%;top:34px;height:96px;border-radius:100px;background:radial-gradient(ellipse at center,var(--a1g),rgba(1,124,152,0) 70%);filter:blur(34px);animation:glowBreathe 7s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;background:var(--card-a);border:1px solid var(--brd);border-radius:14px;box-shadow:var(--sh)">
+          <div style="display:flex;align-items:center;gap:14px;padding:18px 18px 18px 20px">
+            <svg viewBox="0 0 24 24" width="20" height="20" style="flex:none;color:var(--a1s)" fill="currentColor"><path d="M12 2.5l1.9 5.1 5.1 1.9-5.1 1.9L12 16.5l-1.9-5.1L5 9.5l5.1-1.9L12 2.5zM19 15l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9L19 15z"></path></svg>
+            <input value="{{ a.text }}" onChange="{{ a.onChange }}" placeholder="How can I help you grow your business?" style="flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--txt);font-size:17px;font-weight:400;padding:2px 0" />
+            <button aria-label="Voice input" style="flex:none;width:36px;height:36px;border-radius:8px;border:0;background:transparent;color:var(--txt3);cursor:pointer;display:grid;place-items:center" style-hover="background:var(--fill2);color:var(--txt)">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor"><path d="M12 14a3 3 0 003-3V6a3 3 0 10-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"></path></svg>
+            </button>
+            <button aria-label="Send" onClick="{{ a.send }}" style="flex:none;width:38px;height:38px;border-radius:9px;border:0;background:var(--a1);color:#FFFFFF;cursor:pointer;display:grid;place-items:center;box-shadow:0 6px 18px var(--a1f);transition:transform .12s ease,background .15s ease" style-hover="background:var(--a1h);transform:translateY(-1px)" style-active="transform:translateY(1px)">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 4l7 7-1.5 1.5L13 8v12h-2V8l-4.5 4.5L5 11l7-7z"></path></svg>
+            </button>
+          </div>
+          <div style="height:1px;background:var(--line)"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px 16px">
+            <sc-for list="{{ a.cats }}" as="c" hint-placeholder-count="4">
+              <button onClick="{{ c.pick }}" style="display:flex;align-items:center;gap:8px;background:var(--fill);border:1px solid var(--brd);border-radius:100px;padding:9px 14px;color:var(--txt2);font-size:13.5px;font-weight:700;cursor:pointer;transition:all .15s ease" style-hover="background:var(--a1f);border-color:var(--a1b);color:var(--txt)">
+                {{ c.label }}
+                <span style="color:var(--a1s);font-size:12px">&#8250;</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b — Command Palette (neutral / mono) ============ -->
+    <div id="1b" style="width:600px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--b1);padding:5px 7px;border-radius:4px">1b</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Command Palette</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">Keyboard-first, grouped results</span>
+      </div>
+      <div style="position:relative;padding:26px 22px 30px">
+        <div style="position:absolute;left:14%;right:14%;top:16px;height:70px;border-radius:80px;background:radial-gradient(ellipse at center,var(--b1g),rgba(226,232,240,0) 70%);filter:blur(30px);animation:glowSlide 11s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;background:var(--card-b);border:1px solid var(--brd2);border-radius:12px;overflow:hidden;box-shadow:var(--sh2)">
+          <div style="display:flex;align-items:center;gap:12px;padding:16px 16px 14px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--txt4)">&#8250;</span>
+            <input value="{{ b.query }}" onChange="{{ b.onChange }}" placeholder="Type a request or pick an action" style="flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--txt);font-size:15.5px" />
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt3);background:var(--fill2);border:1px solid var(--brd2);border-radius:5px;padding:4px 7px">&#8984;K</span>
+          </div>
+          <div style="height:1px;background:var(--line)"></div>
+          <div style="padding:12px 10px 8px">
+            <div style="padding:4px 10px 8px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--txt4)">{{ b.groupLabel }}</div>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ b.rows }}" as="r" hint-placeholder-count="4">
+                <div onClick="{{ r.pick }}" style="display:flex;align-items:center;gap:12px;padding:10px 10px;border-radius:8px;cursor:pointer;background:{{ r.bg }};transition:background .12s ease" style-hover="background:var(--fill2)">
+                  <span style="flex:none;width:28px;height:28px;border-radius:7px;background:var(--fill2);border:1px solid var(--brd);display:grid;place-items:center;color:var(--b1s)">
+                    <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="{{ r.glyph }}" size="15" hint-size="15px,15px"></x-import>
+                  </span>
+                  <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                    <span style="font-size:14.5px;font-weight:700;color:var(--txt)">{{ r.title }}</span>
+                    <span style="font-size:12.5px;color:var(--txt3)">{{ r.sub }}</span>
+                  </span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt4)">{{ r.hint }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:11px 16px;background:var(--fill);border-top:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt4);white-space:nowrap">
+            <span style="flex:none">&#8593;&#8595; navigate</span>
+            <span style="flex:none">&#8629; run</span>
+            <span style="flex:none">esc close</span>
+            <span style="flex:none;margin-left:auto;color:var(--txt3)">{{ b.count }} actions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c — Orb Composer (purple) ============ -->
+    <div id="1c" style="width:700px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--c1);padding:5px 7px;border-radius:4px">1c</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Orb Composer</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">Greeting, big canvas, switchable playbooks</span>
+      </div>
+      <div style="position:relative;padding:30px 22px 34px">
+        <div style="position:absolute;left:26px;top:10px;width:260px;height:200px;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--c1g),rgba(103,48,180,0) 68%);filter:blur(40px);animation:glowBreathe 9s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;background:linear-gradient(180deg,var(--card-c1) 0%,var(--card-c2) 62%);border:1px solid var(--c1b);border-radius:18px;padding:26px;box-shadow:var(--sh)">
+          <div style="display:flex;align-items:center;gap:14px;padding-bottom:20px">
+            <span style="position:relative;flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center">
+              <span style="position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,var(--c1),var(--c1h),var(--c1s),var(--c1));filter:blur(9px);opacity:.6;animation:spinSlow 8s linear infinite"></span>
+              <span style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,var(--c1),var(--c1h),var(--c1s),var(--c1));animation:spinSlow 8s linear infinite"></span>
+              <span style="position:absolute;inset:4px;border-radius:50%;background:var(--card-c2)"></span>
+              <span style="position:relative;color:var(--c1)">
+                <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="applet-smartplans" size="19" hint-size="19px,19px"></x-import>
+              </span>
+            </span>
+            <span style="display:flex;flex-direction:column;gap:3px">
+              <span style="font-size:21px;font-weight:800;color:var(--txt);letter-spacing:-0.01em">{{ c.greeting }}</span>
+              <span style="font-size:13.5px;color:var(--c-txt2)">{{ c.subline }}</span>
+            </span>
+          </div>
+          <div style="position:relative;background:var(--fill);border:1px solid var(--c1b);border-radius:14px;padding:16px 16px 12px" style-focus-within="--shine-p:running;--shine-o:1">
+            <span style="position:absolute;inset:-1px;border-radius:14px;padding:1.5px;background-image:radial-gradient(transparent,transparent,var(--c1s),var(--c1h),transparent,transparent);background-size:300% 300%;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;pointer-events:none;will-change:background-position;animation:shineRing 8s linear infinite;animation-play-state:var(--shine-p,paused);opacity:var(--shine-o,0)"></span>
+            <textarea value="{{ c.text }}" onChange="{{ c.onChange }}" rows="2" placeholder="Ask anything, or describe the outcome you want…" style="width:100%;resize:none;background:transparent;border:0;outline:none;color:var(--txt);font-size:16.5px;line-height:1.5"></textarea>
+            <div style="display:flex;align-items:center;gap:8px;padding-top:6px">
+              <button aria-label="Add context" style="width:32px;height:32px;border-radius:8px;border:1px solid var(--brd2);background:transparent;color:var(--c1s);cursor:pointer;display:grid;place-items:center" style-hover="background:var(--c1f)">
+                <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="add-circle" size="16" hint-size="16px,16px"></x-import>
+              </button>
+              <span style="font-size:12.5px;color:var(--c-txt3)">Uses your contacts, listings, and pipeline</span>
+              <button onClick="{{ c.send }}" style="margin-left:auto;display:flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:10px 16px;background:var(--c1);color:#FFFFFF;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 8px 22px var(--c1f);transition:transform .12s ease,background .15s ease" style-hover="background:var(--c1h);transform:translateY(-1px)" style-active="transform:translateY(1px)">Generate <span style="font-size:13px">&#8593;</span></button>
+            </div>
+          </div>
+          <sc-if value="{{ c.idle }}">
+            <div style="display:flex;gap:6px;padding:18px 0 14px;flex-wrap:wrap">
+              <sc-for list="{{ c.cats }}" as="t" hint-placeholder-count="4">
+                <button onClick="{{ t.pick }}" style="border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.color }};border-radius:100px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s ease">{{ t.label }}</button>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;min-height:150px">
+              <sc-for list="{{ c.prompts }}" as="p" hint-placeholder-count="3">
+                <div onClick="{{ p.pick }}" onKeyDown="{{ p.onKey }}" role="button" tabindex="0" style="display:flex;flex-direction:column;gap:10px;background:var(--fill);border:1px solid var(--brd);border-radius:12px;padding:14px;cursor:pointer;transition:all .15s ease" style-hover="background:var(--c1f);border-color:var(--c1s);transform:translateY(-2px)" style-focus-visible="border-color:var(--c1s);outline:2px solid var(--c1s);outline-offset:2px">
+                  <span style="width:32px;height:32px;border-radius:8px;background:var(--c1f);color:var(--c1i);display:grid;place-items:center">
+                    <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="{{ p.glyph }}" size="17" hint-size="17px,17px"></x-import>
+                  </span>
+                  <span style="font-size:14px;font-weight:800;color:var(--txt);line-height:1.35;text-wrap:pretty">{{ p.title }}</span>
+                  <span style="font-size:12px;color:var(--c-txt3);margin-top:auto">{{ p.meta }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ c.result }}">
+            <div style="display:flex;flex-direction:column;gap:13px;padding-top:18px">
+              <div style="display:flex;align-items:center;gap:9px">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--c1s);box-shadow:0 0 12px var(--c1g);animation:dotPulse 2.4s ease-in-out infinite"></span>
+                <span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c-txt2)">Working on it</span>
+                <button onClick="{{ c.reset }}" style="margin-left:auto;background:transparent;border:0;color:var(--c1s);font-size:12.5px;font-weight:700;cursor:pointer;padding:0" style-hover="color:var(--c1h)">Start a new request</button>
+              </div>
+              <div style="background:var(--fill);border:1px solid var(--c1b);border-radius:12px;padding:13px 15px;font-size:14.5px;font-weight:700;color:var(--txt);line-height:1.45;text-wrap:pretty">{{ c.request }}</div>
+              <div style="display:flex;flex-direction:column;gap:9px">
+                <sc-for list="{{ c.steps }}" as="st" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;gap:11px">
+                    <span style="flex:none;width:19px;height:19px;border-radius:50%;border:1.5px solid {{ st.ring }};background:{{ st.fill }};display:grid;place-items:center;color:#FFFFFF">
+                      <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="{{ st.mark }}" size="10" hint-size="10px,10px"></x-import>
+                    </span>
+                    <span style="font-size:13.5px;color:{{ st.color }};line-height:1.4">{{ st.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:auto">
+                <button style="border:0;border-radius:10px;padding:10px 16px;background:var(--c1);color:#FFFFFF;font-size:13.5px;font-weight:800;cursor:pointer;transition:background .15s ease" style-hover="background:var(--c1h)">Review the draft</button>
+                <span style="font-size:12px;color:var(--c-txt3)">{{ c.grounding }}</span>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1d — Action Rail (green) ============ -->
+    <div id="1d" style="width:700px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--d1);padding:5px 7px;border-radius:4px">1d</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Action Rail</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">Prompt on the left, checkable next-best-actions right</span>
+      </div>
+      <div style="position:relative;padding:26px 22px 30px">
+        <div style="position:absolute;left:30px;bottom:18px;width:320px;height:160px;background:radial-gradient(ellipse at center,var(--d1g),rgba(2,110,36,0) 70%);filter:blur(38px);animation:glowBreathe 8.5s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;display:grid;grid-template-columns:1.05fr .95fr;background:var(--card-d);border:1px solid var(--brd);border-radius:16px;overflow:hidden;box-shadow:var(--sh)">
+          <div style="display:flex;flex-direction:column;gap:16px;padding:24px;border-right:1px solid var(--line)">
+            <div style="display:flex;align-items:center;gap:9px">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--d1s);box-shadow:0 0 12px var(--d1g);animation:dotPulse 2.4s ease-in-out infinite"></span>
+              <span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--d-txt2)">Command AI</span>
+            </div>
+            <div style="font-size:22px;font-weight:800;color:var(--txt);line-height:1.25;letter-spacing:-0.01em;text-wrap:pretty">What should I work on to grow the business?</div>
+            <div style="background:var(--fill);border:1px solid var(--brd2);border-radius:12px;padding:12px 12px 10px;transition:border-color .15s ease" style-hover="border-color:var(--d1s)">
+              <textarea value="{{ d.text }}" onChange="{{ d.onChange }}" rows="3" placeholder="Type a request…" style="width:100%;resize:none;background:transparent;border:0;outline:none;color:var(--txt);font-size:15px;line-height:1.5"></textarea>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-size:11.5px;color:var(--d-txt3);margin-right:auto">&#8984;&#8629; to run</span>
+                <button onClick="{{ d.send }}" aria-label="Send" style="width:34px;height:34px;border-radius:8px;border:0;background:var(--d1);color:#FFFFFF;cursor:pointer;display:grid;place-items:center;transition:background .15s ease" style-hover="background:var(--d1h)">
+                  <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M12 4l7 7-1.5 1.5L13 8v12h-2V8l-4.5 4.5L5 11l7-7z"></path></svg>
+                </button>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px">
+              <sc-for list="{{ d.chips }}" as="ch" hint-placeholder-count="3">
+                <button onClick="{{ ch.pick }}" style="background:transparent;border:1px dashed var(--dash);border-radius:8px;padding:7px 11px;color:var(--d-txt4);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .15s ease" style-hover="border-color:var(--d1s);color:var(--txt);border-style:solid">{{ ch.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;padding:24px 22px;background:var(--fill)">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;padding-bottom:14px">
+              <span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--d-txt2)">Next best actions</span>
+              <span style="font-size:12px;font-weight:700;color:var(--d1)">{{ d.progress }}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ d.actions }}" as="ac" hint-placeholder-count="4">
+                <div onClick="{{ ac.toggle }}" style="display:flex;align-items:flex-start;gap:11px;background:var(--card-d);border:1px solid var(--brd);border-radius:10px;padding:12px;cursor:pointer;transition:all .15s ease" style-hover="border-color:var(--d1s);background:var(--fill2)">
+                  <span style="flex:none;width:19px;height:19px;border-radius:50%;border:1.5px solid {{ ac.ring }};background:{{ ac.fill }};display:grid;place-items:center;margin-top:1px;color:#FFFFFF">
+                    <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="{{ ac.mark }}" size="10" hint-size="10px,10px"></x-import>
+                  </span>
+                  <span style="display:flex;flex-direction:column;gap:4px">
+                    <span style="font-size:13.5px;font-weight:700;line-height:1.35;color:{{ ac.color }};text-decoration:{{ ac.deco }}">{{ ac.title }}</span>
+                    <span style="font-size:11.5px;color:var(--d-txt3)">{{ ac.meta }}</span>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1e — Voice First (amber) ============ -->
+    <div id="1e" style="width:600px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--e1);padding:5px 7px;border-radius:4px">1e</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Voice First</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">Hands-free between showings</span>
+      </div>
+      <div style="position:relative;padding:26px 22px 30px">
+        <div style="position:absolute;left:50%;top:60px;width:340px;height:260px;transform:translateX(-50%);background:radial-gradient(circle,var(--e1g),rgba(167,59,6,0) 66%);filter:blur(44px);animation:glowBreathe 6s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;background:var(--card-e);border:1px solid var(--brd);border-radius:18px;padding:30px 26px 24px;display:flex;flex-direction:column;align-items:center;gap:20px;box-shadow:var(--sh)">
+          <div style="position:relative;width:120px;height:120px;display:grid;place-items:center">
+            <span style="position:absolute;width:100%;height:100%;border-radius:50%;border:1px solid var(--e1s);opacity:.55;animation:ringOut 3.2s ease-out infinite"></span>
+            <span style="position:absolute;width:100%;height:100%;border-radius:50%;border:1px solid var(--e1s);opacity:.4;animation:ringOut 3.2s ease-out infinite 1.1s"></span>
+            <span style="position:absolute;width:100%;height:100%;border-radius:50%;border:1px solid var(--e1s);opacity:.3;animation:ringOut 3.2s ease-out infinite 2.2s"></span>
+            <button onClick="{{ e.toggle }}" aria-label="Toggle listening" style="position:relative;width:82px;height:82px;border-radius:50%;border:0;background:linear-gradient(180deg,var(--e1),var(--e1d));color:#FFFFFF;cursor:pointer;display:grid;place-items:center;box-shadow:0 12px 34px var(--e1g);transition:transform .14s ease" style-hover="transform:scale(1.04)" style-active="transform:scale(.97)">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 14a3 3 0 003-3V6a3 3 0 10-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"></path></svg>
+            </button>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:36px">
+            <sc-for list="{{ e.bars }}" as="bv" hint-placeholder-count="21">
+              <span style="width:4px;border-radius:2px;background:var(--e1s);height:{{ bv.h }};opacity:{{ bv.op }};transform-origin:bottom;animation:bar {{ bv.dur }} ease-in-out infinite {{ bv.delay }}"></span>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center">
+            <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--e-txt2)">{{ e.status }}</div>
+            <div style="font-size:19px;font-weight:700;color:var(--txt);line-height:1.4;max-width:420px;text-wrap:pretty">{{ e.transcript }}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;width:100%;background:var(--fill);border:1px solid var(--brd2);border-radius:100px;padding:10px 8px 10px 16px">
+            <input value="{{ e.text }}" onChange="{{ e.onChange }}" placeholder="or type a request" style="flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--txt);font-size:14.5px" />
+            <button aria-label="Send" style="flex:none;width:32px;height:32px;border-radius:50%;border:0;background:var(--e1);color:#FFFFFF;cursor:pointer;display:grid;place-items:center" style-hover="background:var(--e1d)">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 4l7 7-1.5 1.5L13 8v12h-2V8l-4.5 4.5L5 11l7-7z"></path></svg>
+            </button>
+          </div>
+          <div style="display:flex;gap:18px;font-size:12px;color:var(--e-txt3)">
+            <span>&#8220;Call my hottest lead&#8221;</span>
+            <span>&#8220;Recap the Miller showing&#8221;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1f — Prompt Builder (blue) ============ -->
+    <div id="1f" style="width:700px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--f1);padding:5px 7px;border-radius:4px">1f</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Prompt Builder</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">Fill-in-the-blank tokens — tap a token to cycle</span>
+      </div>
+      <div style="position:relative;padding:26px 22px 30px">
+        <div style="position:absolute;left:12%;right:12%;bottom:12px;height:110px;background:radial-gradient(ellipse at center,var(--f1g),rgba(15,94,173,0) 70%);filter:blur(36px);animation:glowSlide 12s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;background:var(--card-f);border:1px solid var(--brd);border-radius:16px;padding:24px;box-shadow:var(--sh)">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:18px">
+            <span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--f-txt2)">Build a request</span>
+            <button onClick="{{ f.freeform }}" style="background:transparent;border:0;color:var(--f1s);font-size:12.5px;font-weight:700;cursor:pointer;padding:0" style-hover="color:var(--f1h)">Write it freeform</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:22px;font-weight:700;color:var(--f-txt);line-height:1.7">
+            <span>Draft a</span>
+            <sc-for list="{{ f.tokens }}" as="tk" hint-placeholder-count="4">
+              <button onClick="{{ tk.cycle }}" style="display:inline-flex;align-items:center;gap:7px;background:var(--f1g);border:1px solid var(--f1s);border-radius:8px;padding:4px 10px;color:var(--f1i);font-size:21px;font-weight:800;font-family:'Mulish',sans-serif;cursor:pointer;transition:all .15s ease" style-hover="background:var(--f1s);border-color:var(--f1);color:#FFFFFF">
+                {{ tk.value }}
+                <span style="font-size:11px;opacity:.75">&#9662;</span>
+              </button>
+              <span>{{ tk.after }}</span>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-top:20px;background:var(--fill);border:1px solid var(--brd);border-radius:10px;padding:13px 14px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--f-txt4);padding-top:2px">PROMPT</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.6;color:var(--f-txt3)">{{ f.preview }}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:16px">
+            <div style="display:flex;gap:7px;flex-wrap:wrap;flex:1">
+              <sc-for list="{{ f.recipes }}" as="rc" hint-placeholder-count="3">
+                <button onClick="{{ rc.pick }}" style="background:var(--fill);border:1px solid var(--brd2);border-radius:100px;padding:7px 12px;color:var(--f-txt5);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .15s ease" style-hover="border-color:var(--f1s);color:var(--txt)">{{ rc.label }}</button>
+              </sc-for>
+            </div>
+            <button style="position:relative;overflow:hidden;border:0;border-radius:10px;padding:12px 20px;background:var(--f1);color:#FFFFFF;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 8px 22px var(--f1g)" style-hover="background:var(--f1h)">
+              <span style="position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:sheen 3.6s ease-in-out infinite"></span>
+              <span style="position:relative">Run request</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1g — Slash Console (kw red) ============ -->
+    <div id="1g" style="width:600px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--g1);padding:5px 7px;border-radius:4px">1g</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Slash Console</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">Power-user, monospace, filterable commands</span>
+      </div>
+      <div style="position:relative;padding:26px 22px 30px">
+        <div style="position:absolute;left:20%;right:20%;top:26px;height:80px;background:radial-gradient(ellipse at center,var(--g1g),rgba(206,1,31,0) 70%);filter:blur(34px);animation:glowBreathe 7.5s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;background:var(--card-g);border:1px solid var(--brd2);border-radius:12px;overflow:hidden;box-shadow:var(--sh2)">
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--card-g2);border-bottom:1px solid var(--line)">
+            <span style="width:20px;height:20px;border-radius:4px;background:var(--g1);color:#FFFFFF;display:grid;place-items:center;font-size:10px;font-weight:800;letter-spacing:-.02em">kw</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--txt3)">command://ai</span>
+            <span style="margin-left:auto;display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--txt4)">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--d1);animation:dotPulse 2s ease-in-out infinite"></span>connected
+            </span>
+          </div>
+          <div style="padding:18px 16px 8px;font-family:'IBM Plex Mono',monospace">
+            <div style="font-size:12px;color:var(--txt4);line-height:1.8">Command AI v2 &#183; type <span style="color:var(--g1s)">/</span> for commands or ask in plain words</div>
+            <div style="display:flex;align-items:center;gap:9px;padding:12px 0 4px">
+              <span style="color:var(--g1s);font-size:15px">&#10095;</span>
+              <input value="{{ g.query }}" onChange="{{ g.onChange }}" placeholder="/followup buyers 30d" style="flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--txt);font-family:'IBM Plex Mono',monospace;font-size:15px" />
+              <span style="width:8px;height:18px;background:var(--g1s);animation:caret 1.1s steps(1) infinite"></span>
+            </div>
+          </div>
+          <div style="height:1px;background:var(--line);margin:8px 0 0"></div>
+          <div style="padding:12px 8px 14px;display:flex;flex-direction:column;gap:1px">
+            <sc-for list="{{ g.cmds }}" as="cm" hint-placeholder-count="5">
+              <div onClick="{{ cm.pick }}" style="display:flex;align-items:baseline;gap:12px;padding:9px 12px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Mono',monospace;border-left:2px solid transparent;transition:all .12s ease" style-hover="background:var(--g1g);border-left-color:var(--g1)">
+                <span style="font-size:13px;font-weight:600;color:var(--g1s2);min-width:118px">{{ cm.name }}</span>
+                <span style="flex:1;font-size:12.5px;color:var(--g-txt2)">{{ cm.desc }}</span>
+                <span style="font-size:11px;color:var(--g-txt3)">{{ cm.tag }}</span>
+              </div>
+            </sc-for>
+            <div style="padding:10px 12px 2px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--g-txt3)">{{ g.hint }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1h — Docked Pill (cyan glass) ============ -->
+    <div id="1h" style="width:600px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--h1a);padding:5px 7px;border-radius:4px">1h</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Docked Pill</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">Collapsed by default — click the pill to expand</span>
+      </div>
+      <div style="position:relative;padding:26px 22px 30px;min-height:330px">
+        <div style="position:absolute;left:50%;bottom:26px;width:400px;height:180px;transform:translateX(-50%);background:radial-gradient(ellipse at center,var(--h1g),rgba(0,108,132,0) 70%);filter:blur(40px);animation:glowBreathe 7s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:274px;background:var(--fill);border:1px dashed var(--dash);border-radius:16px;padding:20px">
+          <span style="position:absolute;top:16px;left:18px;font-size:11.5px;color:var(--txt4)">applet content sits behind the dock</span>
+          <div style="position:relative;width:100%;padding:1px;border-radius:{{ h.radius }};background:linear-gradient(120deg,var(--h1c),var(--h1a),var(--h1c));box-shadow:var(--sh);transition:all .28s cubic-bezier(.2,.8,.2,1)">
+            <div style="background:var(--card-h);backdrop-filter:blur(14px);border-radius:{{ h.radiusInner }};overflow:hidden;transition:all .28s cubic-bezier(.2,.8,.2,1)">
+              <div onClick="{{ h.toggle }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer">
+                <span style="flex:none;width:26px;height:26px;border-radius:50%;background:conic-gradient(from 0deg,var(--h1c),var(--h1a),var(--h1c));display:grid;place-items:center;animation:spinSlow 9s linear infinite">
+                  <span style="width:18px;height:18px;border-radius:50%;background:var(--card-h)"></span>
+                </span>
+                <span style="flex:1;font-size:15px;font-weight:700;color:{{ h.titleColor }}">{{ h.title }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--h-txt4);background:var(--fill2);border-radius:5px;padding:3px 7px">&#8984;/</span>
+              </div>
+              <div style="max-height:{{ h.bodyMax }};opacity:{{ h.bodyOpacity }};overflow:hidden;transition:max-height .3s cubic-bezier(.2,.8,.2,1),opacity .22s ease">
+                <div style="padding:0 16px 16px;display:flex;flex-direction:column;gap:14px">
+                  <div style="display:flex;align-items:center;gap:10px;background:var(--fill);border:1px solid var(--brd2);border-radius:10px;padding:12px 12px">
+                    <input value="{{ h.text }}" onChange="{{ h.onChange }}" placeholder="Ask about a contact, listing, or deal…" style="flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--txt);font-size:15px" />
+                    <button aria-label="Send" style="flex:none;width:30px;height:30px;border-radius:7px;border:0;background:var(--h1a);color:#FFFFFF;cursor:pointer;display:grid;place-items:center" style-hover="background:var(--h1ah)">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 4l7 7-1.5 1.5L13 8v12h-2V8l-4.5 4.5L5 11l7-7z"></path></svg>
+                    </button>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+                    <sc-for list="{{ h.quick }}" as="q" hint-placeholder-count="4">
+                      <button onClick="{{ q.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:7px;background:var(--fill);border:1px solid var(--brd);border-radius:10px;padding:12px 6px;cursor:pointer;transition:all .15s ease" style-hover="background:var(--h1g);border-color:var(--h1c);transform:translateY(-2px)">
+                        <span style="width:26px;height:26px;border-radius:7px;background:var(--h1g);color:var(--h1i);display:grid;place-items:center">
+                          <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="{{ q.glyph }}" size="15" hint-size="15px,15px"></x-import>
+                        </span>
+                        <span style="font-size:11.5px;font-weight:700;color:var(--h-txt2);text-align:center;line-height:1.3">{{ q.label }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                    <span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--h-txt5)">Recent</span>
+                    <sc-for list="{{ h.recent }}" as="rr" hint-placeholder-count="2">
+                      <button onClick="{{ rr.pick }}" style="background:transparent;border:1px solid var(--brd2);border-radius:100px;padding:6px 11px;color:var(--h-txt3);font-size:12px;cursor:pointer;transition:all .15s ease" style-hover="border-color:var(--h1c);color:var(--txt)">{{ rr.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1i — Aurora Composer (purple) — 1c canvas, breathing focus glow ============ -->
+    <div id="1i" style="width:700px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-weight:800;font-size:11px;letter-spacing:.1em;color:#FFFFFF;background:var(--c1);padding:5px 7px;border-radius:4px">1i</span>
+        <span style="font-weight:800;font-size:16px;color:var(--h1)">Aurora Composer</span>
+        <span style="font-weight:400;font-size:13px;color:var(--sub)">1c canvas, breathing glow on focus</span>
+      </div>
+      <div style="position:relative;padding:30px 22px 34px">
+        <div style="position:absolute;left:26px;top:10px;width:260px;height:200px;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--c1g),rgba(103,48,180,0) 68%);filter:blur(40px);animation:glowBreathe 9s ease-in-out infinite;pointer-events:none"></div>
+        <div style="position:relative;background:linear-gradient(180deg,var(--card-c1) 0%,var(--card-c2) 62%);border:1px solid var(--c1b);border-radius:18px;padding:26px;box-shadow:var(--sh)">
+          <div style="display:flex;align-items:center;gap:14px;padding-bottom:20px">
+            <span style="position:relative;flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center">
+              <span style="position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,var(--c1),var(--c1h),var(--c1s),var(--c1));filter:blur(9px);opacity:.6;animation:spinSlow 8s linear infinite"></span>
+              <span style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,var(--c1),var(--c1h),var(--c1s),var(--c1));animation:spinSlow 8s linear infinite"></span>
+              <span style="position:absolute;inset:4px;border-radius:50%;background:var(--card-c2)"></span>
+              <span style="position:relative;color:var(--c1)">
+                <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="applet-smartplans" size="19" hint-size="19px,19px"></x-import>
+              </span>
+            </span>
+            <span style="display:flex;flex-direction:column;gap:3px">
+              <span style="font-size:21px;font-weight:800;color:var(--txt);letter-spacing:-0.01em">{{ i.greeting }}</span>
+              <span style="font-size:13.5px;color:var(--c-txt2)">{{ i.subline }}</span>
+            </span>
+          </div>
+          <div style="position:relative;background:var(--fill);border:1px solid var(--c1b);border-radius:14px;padding:16px 16px 12px;transition:border-color .2s ease" style-focus-within="--glow-p:running;--glow-o:1;border-color:var(--c1s)">
+            <span style="position:absolute;inset:0;border-radius:14px;pointer-events:none;opacity:var(--glow-o,0)">
+              <span style="position:absolute;inset:0;border-radius:14px;box-shadow:0 0 22px 2px var(--c1g),0 0 58px 12px var(--c1g),0 0 120px 30px var(--c1f);will-change:opacity;animation:focusBreathe 3.6s ease-in-out infinite;animation-play-state:var(--glow-p,paused)"></span>
+            </span>
+            <textarea value="{{ i.text }}" onChange="{{ i.onChange }}" rows="2" placeholder="Ask anything, or describe the outcome you want…" style="position:relative;width:100%;resize:none;background:transparent;border:0;outline:none;color:var(--txt);font-size:16.5px;line-height:1.5"></textarea>
+            <div style="position:relative;display:flex;align-items:center;gap:8px;padding-top:6px">
+              <button aria-label="Add context" style="width:32px;height:32px;border-radius:8px;border:1px solid var(--brd2);background:transparent;color:var(--c1s);cursor:pointer;display:grid;place-items:center" style-hover="background:var(--c1f)">
+                <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="add-circle" size="16" hint-size="16px,16px"></x-import>
+              </button>
+              <span style="font-size:12.5px;color:var(--c-txt3)">Uses your contacts, listings, and pipeline</span>
+              <button onClick="{{ i.send }}" style="margin-left:auto;display:flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:10px 16px;background:var(--c1);color:#FFFFFF;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 8px 22px var(--c1f);transition:transform .12s ease,background .15s ease" style-hover="background:var(--c1h);transform:translateY(-1px)" style-active="transform:translateY(1px)">Generate <span style="font-size:13px">&#8593;</span></button>
+            </div>
+          </div>
+          <sc-if value="{{ i.idle }}">
+            <div style="display:flex;gap:6px;padding:18px 0 14px;flex-wrap:wrap">
+              <sc-for list="{{ i.cats }}" as="t" hint-placeholder-count="4">
+                <button onClick="{{ t.pick }}" style="border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.color }};border-radius:100px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s ease">{{ t.label }}</button>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;min-height:150px">
+              <sc-for list="{{ i.prompts }}" as="p" hint-placeholder-count="3">
+                <div onClick="{{ p.pick }}" onKeyDown="{{ p.onKey }}" role="button" tabindex="0" style="display:flex;flex-direction:column;gap:10px;background:var(--fill);border:1px solid var(--brd);border-radius:12px;padding:14px;cursor:pointer;transition:all .15s ease" style-hover="background:var(--c1f);border-color:var(--c1s);transform:translateY(-2px)" style-focus-visible="border-color:var(--c1s);outline:2px solid var(--c1s);outline-offset:2px">
+                  <span style="width:32px;height:32px;border-radius:8px;background:var(--c1f);color:var(--c1i);display:grid;place-items:center">
+                    <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="{{ p.glyph }}" size="17" hint-size="17px,17px"></x-import>
+                  </span>
+                  <span style="font-size:14px;font-weight:800;color:var(--txt);line-height:1.35;text-wrap:pretty">{{ p.title }}</span>
+                  <span style="font-size:12px;color:var(--c-txt3);margin-top:auto">{{ p.meta }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ i.result }}">
+            <div style="display:flex;flex-direction:column;gap:13px;padding-top:18px">
+              <div style="display:flex;align-items:center;gap:9px">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--c1s);box-shadow:0 0 12px var(--c1g);animation:dotPulse 2.4s ease-in-out infinite"></span>
+                <span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c-txt2)">Working on it</span>
+                <button onClick="{{ i.reset }}" style="margin-left:auto;background:transparent;border:0;color:var(--c1s);font-size:12.5px;font-weight:700;cursor:pointer;padding:0" style-hover="color:var(--c1h)">Start a new request</button>
+              </div>
+              <div style="background:var(--fill);border:1px solid var(--c1b);border-radius:12px;padding:13px 15px;font-size:14.5px;font-weight:700;color:var(--txt);line-height:1.45;text-wrap:pretty">{{ i.request }}</div>
+              <div style="display:flex;flex-direction:column;gap:9px">
+                <sc-for list="{{ i.steps }}" as="st" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;gap:11px">
+                    <span style="flex:none;width:19px;height:19px;border-radius:50%;border:1.5px solid {{ st.ring }};background:{{ st.fill }};display:grid;place-items:center;color:#FFFFFF">
+                      <x-import component="XdsIcon" from="./xds-icons.jsx" glyph="{{ st.mark }}" size="10" hint-size="10px,10px"></x-import>
+                    </span>
+                    <span style="font-size:13.5px;color:{{ st.color }};line-height:1.4">{{ st.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:auto">
+                <button style="border:0;border-radius:10px;padding:10px 16px;background:var(--c1);color:#FFFFFF;font-size:13.5px;font-weight:800;cursor:pointer;transition:background .15s ease" style-hover="background:var(--c1h)">Review the draft</button>
+                <span style="font-size:12px;color:var(--c-txt3)">{{ i.grounding }}</span>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1600,&quot;height&quot;:1100},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark' | 'light'&quot;,&quot;section&quot;:&quot;Display&quot;}}">
+const C_CATS = ["Lead Gen", "Listings & Buyer Service", "Transactions", "Leverage & Ops"];
+const C_PROMPTS = {
+  "Lead Gen": [
+    { glyph: "applet-contacts", title: "Contact 5 people in your database", meta: "248 contacts · Contacts" },
+    { glyph: "applet-referrals", title: "Find sphere contacts ready to move", meta: "41 in sphere · Referrals" },
+    { glyph: "applet-campaigns", title: "Write a just-listed text to 40 leads", meta: "40 leads · Campaigns" }
+  ],
+  "Listings & Buyer Service": [
+    { glyph: "applet-listings", title: "Draft a listing description for 14 Oak", meta: "14 Oak · Listings" },
+    { glyph: "applet-opportunities", title: "Build a buyer tour for the Kims", meta: "6 saved homes · Opportunities" },
+    { glyph: "applet-reporting", title: "Prep a price-reduction recommendation", meta: "62 days on market · Listings" }
+  ],
+  "Transactions": [
+    { glyph: "applet-tasks", title: "Summarize open items on 3 contracts", meta: "3 contracts · Transactions" },
+    { glyph: "warning", title: "Flag deadlines slipping this week", meta: "5 deadlines · Transactions" },
+    { glyph: "applet-campaigns", title: "Send closing-week updates to clients", meta: "2 closings · Campaigns" }
+  ],
+  "Leverage & Ops": [
+    { glyph: "applet-smartplans", title: "Turn my follow-up into a SmartPlan", meta: "9 steps · SmartPlans" },
+    { glyph: "applet-reporting", title: "Review last month's lead sources", meta: "Last 30 days · Reporting" },
+    { glyph: "applet-tasks", title: "Draft an assistant onboarding checklist", meta: "12 tasks · Tasks" }
+  ]
+};
+const C_SNAPSHOT = { name: "Dana", warmLeads: 12, closings: 3 };
+const B_ROWS = [
+  { glyph: "applet-campaigns", title: "Draft follow-up to new leads", sub: "Uses 12 leads added this week", hint: "\u21B5" },
+  { glyph: "applet-listings", title: "Write a listing description", sub: "Pick a listing from Command", hint: "L" },
+  { glyph: "applet-reporting", title: "Summarize my pipeline", sub: "Opportunities \u00B7 last 30 days", hint: "P" },
+  { glyph: "applet-smartplans", title: "Build a SmartPlan from a goal", sub: "Automates outreach steps", hint: "S" },
+  { glyph: "applet-tasks", title: "Check what closes this week", sub: "Transactions \u00B7 deadlines", hint: "T" }
+];
+const D_ACTIONS = [
+  { title: "Call the 3 leads who opened your CMA twice", meta: "Lead Gen \u00B7 ~10 min" },
+  { title: "Send the Millers a price-drop update", meta: "Buyer Service \u00B7 ~5 min" },
+  { title: "Clear 2 missing docs on 14 Oak", meta: "Transactions \u00B7 ~8 min" },
+  { title: "Reconnect with 5 quiet sphere contacts", meta: "Lead Gen \u00B7 ~6 min" }
+];
+const F_TOKENS = [
+  { key: "type", after: "to", options: ["follow-up email", "listing description", "open-house invite", "price-drop note"] },
+  { key: "who", after: "in", options: ["past clients", "new leads", "my sphere", "renters turning buyers"] },
+  { key: "where", after: "about", options: ["Austin", "Round Rock", "78704", "Lake Travis"] },
+  { key: "topic", after: "", options: ["falling rates", "a price change", "the spring market", "a new listing"] }
+];
+const G_CMDS = [
+  { name: "/followup", desc: "Draft follow-ups for a segment of contacts", tag: "contacts" },
+  { name: "/listing", desc: "Generate copy, flyer, and social for a listing", tag: "listings" },
+  { name: "/pipeline", desc: "Summarize opportunities by stage and value", tag: "reports" },
+  { name: "/smartplan", desc: "Turn a goal into an automated plan", tag: "automation" },
+  { name: "/cma", desc: "Pull comps and draft a pricing narrative", tag: "listings" },
+  { name: "/recap", desc: "Recap a showing, call, or appointment", tag: "notes" }
+];
+
+class Component extends DCLogic {
+  state = {
+    theme: null, aText: "", bQuery: "", bSel: 0, cCat: "Lead Gen", cText: "", cSent: "", dText: "",
+    dDone: [false, false, false, false], eOn: true, eText: "",
+    fVals: { type: 0, who: 0, where: 0, topic: 0 }, gQuery: "", hOpen: false, hText: "",
+    iCat: "Lead Gen", iText: "", iSent: ""
+  };
+
+  theme() {
+    return this.state.theme || this.props.theme || "dark";
+  }
+  greeting() {
+    const h = new Date().getHours();
+    if (h < 12) return "Good morning";
+    if (h < 18) return "Good afternoon";
+    return "Good evening";
+  }
+  applyTheme() {
+    document.documentElement.dataset.theme = this.theme();
+  }
+  componentDidMount() { this.applyTheme(); }
+  componentDidUpdate() { this.applyTheme(); }
+
+  set = (k) => (ev) => this.setState({ [k]: ev.target.value });
+  put = (k, v) => () => this.setState({ [k]: v });
+
+  // Shared by 1c and 1i — the two differ only in their focus treatment, so the
+  // bindings are generated from the same shape against different state keys.
+  composer(catKey, textKey, sentKey) {
+    const s = this.state;
+    const cat = s[catKey];
+    return {
+      text: s[textKey],
+      onChange: this.set(textKey),
+      greeting: this.greeting() + ", " + C_SNAPSHOT.name,
+      subline: "You have " + C_SNAPSHOT.warmLeads + " warm leads and " +
+        C_SNAPSHOT.closings + " closings this month",
+      send: () => this.setState((st) => ({
+        [sentKey]: st[textKey].trim() || C_PROMPTS[st[catKey]][0].title,
+        [textKey]: ""
+      })),
+      reset: this.put(sentKey, ""),
+      idle: !s[sentKey],
+      result: !!s[sentKey],
+      request: s[sentKey],
+      grounding: "Grounded in your " + cat.toLowerCase() + " data",
+      steps: [
+        { label: "Pulled the matching records from Command", done: true },
+        { label: "Checked your recent outreach for overlap", done: true },
+        { label: "Drafting in your voice", done: false }
+      ].map((st) => ({
+        label: st.label,
+        mark: st.done ? "checkmark" : "",
+        ring: st.done ? "var(--c1)" : "var(--brd2)",
+        fill: st.done ? "var(--c1)" : "transparent",
+        color: st.done ? "var(--c-txt2)" : "var(--txt)"
+      })),
+      cats: C_CATS.map((label) => {
+        const on = label === cat;
+        return {
+          label,
+          bg: on ? "var(--c1f)" : "var(--fill)",
+          border: on ? "var(--c1s)" : "var(--brd)",
+          color: on ? "var(--txt)" : "var(--c-txt2)",
+          pick: this.put(catKey, label)
+        };
+      }),
+      prompts: C_PROMPTS[cat].map((p) => ({
+        ...p,
+        pick: this.put(textKey, p.title),
+        onKey: (ev) => {
+          if (ev.key === "Enter" || ev.key === " ") {
+            ev.preventDefault();
+            this.setState({ [textKey]: p.title });
+          }
+        }
+      }))
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const dark = this.theme() === "dark";
+
+    const q = s.bQuery.trim().toLowerCase();
+    const rows = B_ROWS.filter((r) => !q || r.title.toLowerCase().includes(q) || r.sub.toLowerCase().includes(q));
+    const doneCount = s.dDone.filter(Boolean).length;
+    const vals = F_TOKENS.map((t) => t.options[s.fVals[t.key] % t.options.length]);
+    const gq = s.gQuery.trim().toLowerCase().replace(/^\//, "");
+    const cmds = G_CMDS.filter((c) => !gq || c.name.includes(gq) || c.desc.toLowerCase().includes(gq));
+
+    return {
+      themeDark: this.put("theme", "dark"),
+      themeLight: this.put("theme", "light"),
+      darkBg: dark ? "var(--a1)" : "transparent",
+      darkFg: dark ? "#FFFFFF" : "var(--txt3)",
+      lightBg: dark ? "transparent" : "var(--a1)",
+      lightFg: dark ? "var(--txt3)" : "#FFFFFF",
+      a: {
+        text: s.aText,
+        onChange: this.set("aText"),
+        send: () => this.setState({ aText: "" }),
+        cats: ["Lead Gen", "Listings & Buyer Service", "Transactions", "Leverage & Operations"].map((label) => ({
+          label, pick: this.put("aText", "Show me my best next move in " + label)
+        }))
+      },
+      b: {
+        query: s.bQuery,
+        onChange: this.set("bQuery"),
+        groupLabel: q ? "Matching actions" : "Suggested for you",
+        count: rows.length,
+        rows: rows.map((r, i) => ({
+          ...r,
+          bg: i === s.bSel ? "var(--fill2)" : "transparent",
+          pick: this.put("bSel", i)
+        }))
+      },
+      c: this.composer("cCat", "cText", "cSent"),
+      i: this.composer("iCat", "iText", "iSent"),
+      d: {
+        text: s.dText,
+        onChange: this.set("dText"),
+        send: () => this.setState({ dText: "" }),
+        progress: doneCount + " of " + s.dDone.length + " done",
+        chips: ["Grow my pipeline", "Save me time today", "Win a listing"].map((label) => ({
+          label, pick: this.put("dText", label)
+        })),
+        actions: D_ACTIONS.map((ac, i) => {
+          const on = s.dDone[i];
+          return {
+            ...ac,
+            mark: on ? "checkmark" : "",
+            ring: on ? "var(--d1)" : "var(--brd2)",
+            fill: on ? "var(--d1)" : "transparent",
+            color: on ? "var(--txt3)" : "var(--txt)",
+            deco: on ? "line-through" : "none",
+            toggle: () => this.setState((st) => {
+              const next = st.dDone.slice();
+              next[i] = !next[i];
+              return { dDone: next };
+            })
+          };
+        })
+      },
+      e: {
+        text: s.eText,
+        onChange: this.set("eText"),
+        toggle: () => this.setState({ eOn: !s.eOn }),
+        status: s.eOn ? "Listening" : "Tap to speak",
+        transcript: s.eOn
+          ? "\u201CText the buyers on 14 Oak that the seller accepted\u2026\u201D"
+          : "Ask for a recap, a draft, or your next best action.",
+        bars: Array.from({ length: 21 }, (_, i) => {
+          const peak = 10 + Math.round(26 * Math.abs(Math.sin((i + 1) * 1.1)));
+          return {
+            h: peak + "px",
+            op: s.eOn ? 1 : 0.28,
+            dur: (0.75 + ((i * 7) % 5) * 0.14).toFixed(2) + "s",
+            delay: ((i % 7) * 0.09).toFixed(2) + "s"
+          };
+        })
+      },
+      f: {
+        tokens: F_TOKENS.map((t, i) => ({
+          value: vals[i],
+          after: t.after,
+          cycle: () => this.setState((st) => ({
+            fVals: { ...st.fVals, [t.key]: (st.fVals[t.key] + 1) % t.options.length }
+          }))
+        })),
+        preview: "Draft a " + vals[0] + " to " + vals[1] + " in " + vals[2] + " about " + vals[3] + ", in my voice, ready to send from Campaigns.",
+        recipes: ["Load a saved recipe", "Reset tokens", "Add a step"].map((label) => ({
+          label,
+          pick: label === "Reset tokens" ? this.put("fVals", { type: 0, who: 0, where: 0, topic: 0 }) : () => {}
+        })),
+        freeform: () => {}
+      },
+      g: {
+        query: s.gQuery,
+        onChange: this.set("gQuery"),
+        cmds: cmds.map((c) => ({ ...c, pick: this.put("gQuery", c.name + " ") })),
+        hint: cmds.length ? "\u2191\u2193 to select \u00B7 tab to autocomplete \u00B7 " + cmds.length + " of " + G_CMDS.length + " commands" : "No command matches \u2014 press \u21B5 to ask in plain words instead"
+      },
+      h: {
+        text: s.hText,
+        onChange: this.set("hText"),
+        toggle: () => this.setState({ hOpen: !s.hOpen }),
+        title: s.hOpen ? "Command AI" : "Ask Command AI",
+        titleColor: s.hOpen ? "var(--txt)" : "var(--h-txt)",
+        radius: s.hOpen ? "16px" : "100px",
+        radiusInner: s.hOpen ? "15px" : "99px",
+        bodyMax: s.hOpen ? "320px" : "0px",
+        bodyOpacity: s.hOpen ? 1 : 0,
+        quick: [
+          { glyph: "applet-campaigns", label: "Follow up" },
+          { glyph: "applet-listings", label: "Listing copy" },
+          { glyph: "applet-reporting", label: "Pipeline" },
+          { glyph: "applet-smartplans", label: "SmartPlan" }
+        ].map((qq) => ({ ...qq, pick: this.put("hText", qq.label + " \u2014 ") })),
+        recent: ["Millers closing recap", "Q3 lead sources"].map((label) => ({
+          label, pick: this.put("hText", label)
+        }))
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
